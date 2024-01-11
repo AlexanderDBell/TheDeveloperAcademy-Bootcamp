@@ -57,5 +57,5 @@ class GuessingGame:
                 return False
             print(f'Please enter {confirm[0]}/{deny[0]}.')
 
-game = GuessingGame(1, 5)
+game = GuessingGame()
 game.game()
