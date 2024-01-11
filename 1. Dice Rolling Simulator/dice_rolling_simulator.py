@@ -1,22 +1,24 @@
 import random
 
 class Dice:
-    def __init__(self, min: int = 1, max: int = 6) -> None:
-        self.min = min
-        self.max = max
+    def __init__(self, faces: list[int] = [1,2,3,4,5,6]) -> None:
+        self.faces = faces
 
     def roll(self) -> None:
         while True:
-            result = random.randint(self.min, self.max)
-            print(f'Your roll is {result}')
+            print('Dice rolling...')
+            result = random.randint(0, len(self.faces)-1)
+            random_face = self.faces[result]
+            print(f'Your roll is {random_face}!')
             reroll = self._reroll()
             if not reroll:
+                print('Thanks for playing!')
                 break
     
     def _reroll(self) -> bool:
         while True:
-            confirm = ['y']
-            deny = ['n']
+            confirm = ['yes', 'y']
+            deny = ['no', 'n']
             user_input = input(f'Would you like to roll again ({confirm[0]}/{deny[0]})? ')
             decision = user_input.lower()
             if decision in confirm:

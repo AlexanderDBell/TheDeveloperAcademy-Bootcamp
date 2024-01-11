@@ -5,23 +5,57 @@ class GuessingGame:
         self.min = min
         self.max = max
     
-    def run(self) -> None:
-        print(f'Generating a number from {self.min} to {self.max}.')
-        number = random.randint(self.min, self.max)
+    def game(self) -> None:
+        print('Enter Q at any time to quit.')
+        first_round = True
         while True:
-            try:
-                guess = input('What is the number? ')
+            play = self._play(first_round)
+            if not play:
+                break
+            quit = self._run()
+            if quit:
+                break
+            first_round = False
+
+    def _run(self) -> bool:
+        print(f'Generating a number from {self.min} to {self.max}...')
+        number = random.randint(self.min, self.max)
+        score = 1
+        while True:
+            guess = input('What is the number? ')
+            if guess.lower() == 'q':
+                return True
+            try:   
                 guess = int(guess)
             except ValueError:
                 print('Please enter an integer.')
                 continue
             if guess < number:
-                print('Too low.')
+                print('You guessed too low.')
+                score += 1
             elif guess > number:
-                print('Too high.')
+                print('You guessed too high.')
+                score += 1
             else:
-                print('You Win!')
-                break
+                print('You did it! You Win!')
+                print(f'You guessed in {score} attempts.')
+                return False
 
-game = GuessingGame()
-game.run()
+    def _play(self, first_round: bool) -> bool:
+        while True:
+            confirm = ['yes', 'y']
+            deny = ['no', 'n']
+            if first_round:
+                again = ''
+            else:
+                again = 'again '
+            user_input = input(f'Would you like to play {again}({confirm[0]}/{deny[0]})? ')
+            decision = user_input.lower()
+            if decision in confirm:
+                return True
+            if decision in deny:
+                return False
+            print(f'Please enter {confirm[0]}/{deny[0]}.')
+
+game = GuessingGame(1, 5)
+game.game()
