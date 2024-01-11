@@ -4,21 +4,7 @@ class GuessingGame:
     def __init__(self, min: int = 1, max: int = 100) -> None:
         self.min = min
         self.max = max
-    
-    def game(self) -> None:
-        print('Enter Q at any time to quit.')
-        first_round = True
-        while True:
-            play = self._play(first_round)
-            if not play:
-                break
-            quit = self._run()
-            if quit:
-                break
-            first_round = False
 
-    def _run(self) -> bool:
-        print(f'Generating a number from {self.min} to {self.max}...')
     def game(self) -> None:
         print('Enter Q at any time to quit.')
         first_round = True
@@ -34,7 +20,6 @@ class GuessingGame:
     def _run(self) -> bool:
         print(f'Generating a number from {self.min} to {self.max}...')
         number = random.randint(self.min, self.max)
-        score = 1
         score = 1
         while True:
             guess = input('What is the number? ')
