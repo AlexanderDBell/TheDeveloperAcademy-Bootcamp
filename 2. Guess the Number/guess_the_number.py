@@ -1,4 +1,5 @@
 import random
+from typing_extensions import Literal
 
 class GuessingGame:
     def __init__(self, min: int = 1, max: int = 100) -> None:
@@ -21,7 +22,7 @@ class GuessingGame:
             highscore = result
             first_round = False
 
-    def _guess(self, highscore: int) -> int | str:
+    def _guess(self, highscore: int | None) -> int | Literal['quit']:
         print(f'Generating a number from {self.min} to {self.max}...')
         number = random.randint(self.min, self.max)
         score = 1
@@ -46,7 +47,7 @@ class GuessingGame:
                 highscore = self._update_highscore(score, highscore)
                 return highscore
 
-    def _update_highscore(self, score, highscore):
+    def _update_highscore(self, score: int, highscore: int | None):
         if highscore is None or highscore > score:
             print('You got a new highscore!')
             return score
