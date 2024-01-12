@@ -10,7 +10,7 @@ class GuessingGame:
         first_round = True
         highscore = None
         while True:
-            play = self._replay(first_round)
+            play = self._options(first_round)
             if not play:
                 break
             result = self._guess(highscore)
@@ -50,7 +50,7 @@ class GuessingGame:
             return score
         return highscore
 
-    def _replay(self, first_round: bool) -> bool:
+    def _options(self, first_round: bool) -> bool:
         while True:
             confirm = ['yes', 'y']
             deny = ['no', 'n', 'q']
