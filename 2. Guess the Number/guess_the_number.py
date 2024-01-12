@@ -12,9 +12,11 @@ class GuessingGame:
         while True:
             play = self._options(first_round)
             if not play:
+                print('Thank you for playing!')
                 break
             result = self._guess(highscore)
             if result == 'quit':
+                print('Thank you for playing!')
                 break
             highscore = result
             first_round = False
