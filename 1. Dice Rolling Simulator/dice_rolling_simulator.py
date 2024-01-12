@@ -1,7 +1,7 @@
 import random
 
 class Dice:
-    def __init__(self, faces: list[int] = [1,2,3,4,5,6]) -> None:
+    def __init__(self, faces: list = [1,2,3,4,5,6]) -> None:
         self.faces = faces
 
     def roll(self) -> None:
