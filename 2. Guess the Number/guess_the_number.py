@@ -8,23 +8,25 @@ class GuessingGame:
     def play(self) -> None:
         print('Enter Q at any time to quit.')
         first_round = True
+        highscore = None
         while True:
             play = self._replay(first_round)
             if not play:
                 break
-            quit = self._guess()
-            if quit:
+            result = self._guess(highscore)
+            if result == 'quit':
                 break
+            highscore = result
             first_round = False
 
-    def _guess(self) -> bool:
+    def _guess(self, highscore: int) -> int | str:
         print(f'Generating a number from {self.min} to {self.max}...')
         number = random.randint(self.min, self.max)
         score = 1
         while True:
             guess = input('What is the number? ')
             if guess.lower() == 'q':
-                return True
+                return 'quit'
             try:   
                 guess = int(guess)
             except ValueError:
@@ -33,15 +35,20 @@ class GuessingGame:
             if guess < number:
                 print('You guessed too low.')
                 score += 1
-                print('You guessed too low.')
-                score += 1
             elif guess > number:
                 print('You guessed too high.')
                 score += 1
             else:
                 print('You did it! You Win!')
                 print(f'You guessed in {score} attempts.')
-                return False
+                highscore = self._update_highscore(score, highscore)
+                return highscore
+
+    def _update_highscore(self, score, highscore):
+        if highscore is None or highscore > score:
+            print('You got a new highscore!')
+            return score
+        return highscore
 
     def _replay(self, first_round: bool) -> bool:
         while True:
