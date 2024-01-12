@@ -68,5 +68,6 @@ class GuessingGame:
                 return False
             print(f'Please enter {confirm[0]}/{deny[0]}.')
 
-game = GuessingGame()
-game.play()
+if __name__ == "__main__":
+    game = GuessingGame()
+    game.play()

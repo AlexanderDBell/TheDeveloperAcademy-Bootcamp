@@ -27,5 +27,6 @@ class Dice:
                 return False
             print(f'Please enter {confirm[0]}/{deny[0]}.')
 
-d6 = Dice()
-d6.roll()
+if __name__ == '__main__':
+    d6 = Dice()
+    d6.roll()
