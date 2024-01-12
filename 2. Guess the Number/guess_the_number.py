@@ -2,6 +2,27 @@ import random
 from typing_extensions import Literal
 
 class GuessingGame:
+    '''
+    A class used to represent a Guessing Game
+
+    ...
+
+    Attributes
+    ----------
+    min : int
+        the minimum value that the number can be
+    max : int
+        the maximum value that the number can be
+
+    Methods
+    -------
+    play()
+        Plays the game. The game involves requesting the user guess the
+        number until they correctly guess or quit. If they finish a
+        round it will ask if they want to play again. Keeps track of the
+        player's score for the game and highscore across games.
+    '''
+    
     def __init__(self, min: int = 1, max: int = 100) -> None:
         self.min = min
         self.max = max

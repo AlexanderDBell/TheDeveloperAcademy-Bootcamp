@@ -1,6 +1,21 @@
 import random
 
 class Dice:
+    """
+    A class used to represent a Die
+
+    ...
+    Attributes
+    ----------
+    faces : list
+        a list containing the faces of the die
+    
+    Methods
+    -------
+    roll()
+        Rolls the die and keeps rerolling if requested
+    """
+
     def __init__(self, faces: list = [1,2,3,4,5,6]) -> None:
         self.faces = faces
 
