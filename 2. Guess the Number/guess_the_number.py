@@ -5,19 +5,19 @@ class GuessingGame:
         self.min = min
         self.max = max
 
-    def game(self) -> None:
+    def play(self) -> None:
         print('Enter Q at any time to quit.')
         first_round = True
         while True:
-            play = self._play(first_round)
+            play = self._replay(first_round)
             if not play:
                 break
-            quit = self._run()
+            quit = self._guess()
             if quit:
                 break
             first_round = False
 
-    def _run(self) -> bool:
+    def _guess(self) -> bool:
         print(f'Generating a number from {self.min} to {self.max}...')
         number = random.randint(self.min, self.max)
         score = 1
@@ -43,10 +43,10 @@ class GuessingGame:
                 print(f'You guessed in {score} attempts.')
                 return False
 
-    def _play(self, first_round: bool) -> bool:
+    def _replay(self, first_round: bool) -> bool:
         while True:
             confirm = ['yes', 'y']
-            deny = ['no', 'n']
+            deny = ['no', 'n', 'q']
             if first_round:
                 again = ''
             else:
@@ -60,4 +60,4 @@ class GuessingGame:
             print(f'Please enter {confirm[0]}/{deny[0]}.')
 
 game = GuessingGame()
-game.game()
+game.play()
