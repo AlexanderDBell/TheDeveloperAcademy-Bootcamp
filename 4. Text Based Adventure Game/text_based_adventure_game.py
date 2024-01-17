@@ -19,6 +19,7 @@ def main() -> None:
         child_bedroom,
         bathroom
     }
+
     map = Map(rooms)
     map.connect_rooms(front_garden, {living_room})
     map.connect_rooms(living_room, {dining_room, front_garden})
@@ -28,12 +29,16 @@ def main() -> None:
     map.connect_rooms(master_bedroom, {hallway})
     map.connect_rooms(child_bedroom, {hallway})
     map.connect_rooms(bathroom, {hallway})
+
     player = Player(front_garden.coordinates, map)
+
     while True:
         current_room = map.grid[player.coordinates]
         print(f'You are in the {current_room.name}')
+
         user_input = InputHandler()
         output = user_input.output()
+        
         match output:
             case 'quit':
                 break
