@@ -1,7 +1,7 @@
 from typing_extensions import Literal
 
 def main() -> None:
-    outside = Room('outside', (0, 0), 'placeholder')
+    front_garden = Room('front garden', (0, 0), 'placeholder')
     living_room = Room('living room', (0, 1), 'placeholder')
     dining_room = Room('dining room', (0, 2), 'placeholder')
     kitchen = Room('kitchen', (0, 3), 'placeholder')
@@ -10,7 +10,7 @@ def main() -> None:
     child_bedroom = Room("children's bedroom", (-1, 1), 'placeholder')
     bathroom = Room('bathroom', (-2, 2), 'placeholder')
     rooms = {
-        outside,
+        front_garden,
         living_room,
         dining_room,
         kitchen,
@@ -20,15 +20,15 @@ def main() -> None:
         bathroom
     }
     map = Map(rooms)
-    map.connect_rooms(outside, {living_room})
-    map.connect_rooms(living_room, {dining_room, outside})
+    map.connect_rooms(front_garden, {living_room})
+    map.connect_rooms(living_room, {dining_room, front_garden})
     map.connect_rooms(dining_room, {kitchen, living_room, hallway})
     map.connect_rooms(kitchen, {dining_room})
     map.connect_rooms(hallway, {master_bedroom, child_bedroom, bathroom, dining_room})
     map.connect_rooms(master_bedroom, {hallway})
     map.connect_rooms(child_bedroom, {hallway})
     map.connect_rooms(bathroom, {hallway})
-    player = Player(outside.coordinates, map)
+    player = Player(front_garden.coordinates, map)
     while True:
         current_room = map.grid[player.coordinates]
         print(f'You are in the {current_room.name}')
