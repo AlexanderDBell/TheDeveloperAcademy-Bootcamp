@@ -1,6 +1,6 @@
 from typing_extensions import Literal
 
-def main():
+def main() -> None:
     outside = Room('outside', (0, 0), 'placeholder')
     living_room = Room('living room', (0, 1), 'placeholder')
     dining_room = Room('dining room', (0, 2), 'placeholder')
@@ -53,8 +53,25 @@ move (forward, back, left, right): move in the specified direction'''
                 player.move('left')
             case 'right':
                 player.move('right')
+            case 'error':
+                print('Invalid')
 
 class Room:
+    '''
+    A class used to represent a Room
+
+    ...
+
+    Attributes
+    ----------
+    name : str
+        the name of the room
+    coordinates : tuple[int, int]
+        the coordinates of the room on the map
+    description : str
+        the description of the room
+    '''
+
     def __init__(
             self,
             name: str,
@@ -66,6 +83,26 @@ class Room:
         self.description = description
 
 class Map:
+    '''
+    A class used to represent a Map
+
+    ...
+
+    Attributes
+    ----------
+    rooms : set[Room]
+        the rooms on the map
+    grid : dict[tuple[int, int], Room]
+        the layout of the map that stores what is at each coordinate
+    connections : dict[Room, set[Room]]
+        the connections between rooms
+    
+    Methods
+    -------
+    connect_rooms(origin_room, connections)
+        Connects the origin room to rooms in connections set
+    '''
+
     def __init__(self, rooms: set[Room]) -> None:
         self.rooms = rooms
         self.grid = self._create_grid()
@@ -96,6 +133,24 @@ class Map:
         raise Exception('rooms not adjacent')
 
 class Player:
+    '''
+    A class used to represent a Player
+
+    ...
+
+    Attributes
+    ----------
+    coordinates : tuple[int, int]
+        coordinate location of the player on the map
+    map : Map
+        the map the player is on
+    
+    Methods
+    -------
+    move(direction)
+        moves the player in the specified direction
+    '''
+
     def __init__(self, coordinates: tuple[int, int], map: Map) -> None:
         self.coordinates = coordinates
         self.map = map
@@ -132,10 +187,28 @@ class Player:
         return False
     
 class InputHandler:
+    '''
+    A class used to represent an Input Handler
+
+    ...
+
+    Attributes
+    ----------
+    user_input : str
+        lowercase input from user
+    
+    Methods
+    -------
+    output()
+        converts user input to literals
+    '''
+
     def __init__(self) -> None:
         self.user_input = input('What would you like to do? ').lower()
     
-    def output(self):
+    def output(self) -> Literal[
+        'quit', 'help', 'look', 'forward', 'back', 'left', 'right', 'error'
+    ]:
         match self.user_input:
             case 'quit':
                 return 'quit'
@@ -151,6 +224,8 @@ class InputHandler:
                 return 'left'
             case 'move right':
                 return 'right'
+            case _:
+                return 'error'
 
 if __name__ == '__main__':
     main()
