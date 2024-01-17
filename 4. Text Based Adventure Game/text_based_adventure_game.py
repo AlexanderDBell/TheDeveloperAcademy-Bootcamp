@@ -43,9 +43,10 @@ def main() -> None:
             case 'quit':
                 break
             case 'help':
-                message = '''quit: quit the game
-look around: look around the room you are in
-move (forward, back, left, right): move in the specified direction'''
+                message = ('quit: quit the game'
+                    '\nlook around: look around the room you are in'
+                    '\nmove (forward, back, left, right): move in the'
+                    ' specified direction')
                 print(message)
             case 'look':
                 current_room = map.grid[player.coordinates]
