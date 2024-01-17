@@ -112,7 +112,7 @@ class Map:
     def __init__(self, rooms: set[Room]) -> None:
         self.rooms = rooms
         self.grid = self._create_grid()
-        self.connections = {}
+        self.connections: dict[Room, set[Room]] = {}
 
     def connect_rooms(self, origin_room: Room, connections: set[Room]) -> None:
         rooms_valid = connections.union({origin_room}).issubset(self.rooms)
