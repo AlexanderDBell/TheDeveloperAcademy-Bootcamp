@@ -28,6 +28,31 @@ def main():
     map.connect_rooms(master_bedroom, {hallway})
     map.connect_rooms(child_bedroom, {hallway})
     map.connect_rooms(bathroom, {hallway})
+    player = Player(outside.coordinates, map)
+    while True:
+        current_room = map.grid[player.coordinates]
+        print(f'You are in the {current_room.name}')
+        user_input = InputHandler()
+        output = user_input.output()
+        match output:
+            case 'quit':
+                break
+            case 'help':
+                message = '''quit: quit the game
+look around: look around the room you are in
+move (forward, back, left, right): move in the specified direction'''
+                print(message)
+            case 'look':
+                current_room = map.grid[player.coordinates]
+                print(current_room.description)
+            case 'forward':
+                player.move('forward')
+            case 'back':
+                player.move('back')
+            case 'left':
+                player.move('left')
+            case 'right':
+                player.move('right')
 
 class Room:
     def __init__(
@@ -105,6 +130,27 @@ class Player:
         if test_room in self.map.connections[current_room]:
             return True
         return False
+    
+class InputHandler:
+    def __init__(self) -> None:
+        self.user_input = input('What would you like to do? ').lower()
+    
+    def output(self):
+        match self.user_input:
+            case 'quit':
+                return 'quit'
+            case 'help':
+                return 'help'
+            case 'look around':
+                return 'look'
+            case 'move forward':
+                return 'forward'
+            case 'move back':
+                return 'back'
+            case 'move left':
+                return 'left'
+            case 'move right':
+                return 'right'
 
 if __name__ == '__main__':
     main()
