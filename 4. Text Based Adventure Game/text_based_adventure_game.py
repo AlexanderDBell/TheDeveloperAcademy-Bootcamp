@@ -241,7 +241,7 @@ class InputHandler:
     Methods
     -------
     output()
-        decides what to do based on user input
+        Decides what to do based on user input
     '''
 
     def __init__(self) -> None:
