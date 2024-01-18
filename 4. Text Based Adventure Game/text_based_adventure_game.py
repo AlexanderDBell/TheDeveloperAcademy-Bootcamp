@@ -12,17 +12,18 @@ def main() -> None:
         'living room',
         (0, 1),
         ('The living room is unassuming. A TV, a sofa and a couple of '
-         'armchairs. You think about the happy times the family must have spent '
-         'together. You hear a faint sound: laughter. Or is it crying? In front '
-         'of you is the dining room. Behind you is the entrance to the house.')
+         'armchairs. You think about the happy times the family must have '
+         'spent together. You hear a faint sound: laughter. Or is it crying? '
+         'In front of you is the dining room. Behind you is the entrance to '
+         'the house.')
     )
     dining_room = Room(
         'dining room',
         (0, 2),
         ("A table and chairs. You don't know what you were expecting. You take "
          "a closer look and see that the head of the table is covered in stab "
-         'marks. In front of you is the kitchen. Behind you is the living room. '
-         'On your left is a hallway.')
+         'marks. In front of you is the kitchen. Behind you is the living '
+         'room. On your left is a hallway.')
     )
     kitchen = Room(
         'kitchen',
@@ -44,8 +45,9 @@ def main() -> None:
         'master bedroom',
         (-1, 3),
         ('The king bed lies in the middle of the room backed up against the '
-         'wall. The headboard and wall are peppered with shotgun pellets. Every '
-         'so often you faintly hear a deep sob. Behind you is the hallway.')
+         'wall. The headboard and wall are peppered with shotgun pellets. '
+         'Every so often you faintly hear a deep sob. Behind you is the '
+         'hallway.')
     )
     child_bedroom = Room(
         "child's bedroom",
@@ -86,6 +88,11 @@ def main() -> None:
 
     player = Player(entrance.coordinates, map)
     print('Welcome to the game, enter help for available commands.')
+    introduction = ("You are a private investigator who's been hired to look "
+                    'into the deaths of a family of three. The police have '
+                    'decided not to investigate and a family member wants to '
+                    'understand what happened in an attempt to seek closure.')
+    print(textwrap.fill(introduction))
     player.print_current_room()
 
     while True:
