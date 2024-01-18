@@ -89,33 +89,9 @@ def main() -> None:
     player.print_current_room()
 
     while True:
-        user_input = InputHandler()
-        output = user_input.output()
-        
-        match output:
-            case 'quit':
-                break
-            case 'help':
-                message = ('help: display list of commands\n'
-                           'look around: look around the room you are in\n'
-                           'move (forward, back, left, right): move in the '
-                           'specified direction\n'
-                           'quit: quit the game')
-                print(message)
-            case 'look':
-                current_room = map.grid[player.coordinates]
-                text = current_room.description
-                print(textwrap.fill(text))
-            case 'forward':
-                player.move('forward')
-            case 'back':
-                player.move('back')
-            case 'left':
-                player.move('left')
-            case 'right':
-                player.move('right')
-            case 'error':
-                print('Invalid command.')
+        input_handler = InputHandler()
+        if input_handler.output(player) == 'quit':
+            break
 
 class Room:
     '''
@@ -265,32 +241,37 @@ class InputHandler:
     Methods
     -------
     output()
-        converts user input to literals
+        decides what to do based on user input
     '''
 
     def __init__(self) -> None:
         self.user_input = input('What would you like to do? ').lower()
     
-    def output(self) -> Literal[
-        'quit', 'help', 'look', 'forward', 'back', 'left', 'right', 'error'
-    ]:
+    def output(self, player: Player) -> Literal['quit'] | None:
         match self.user_input:
             case 'quit':
                 return 'quit'
             case 'help':
-                return 'help'
+                message = ('help: display list of commands\n'
+                           'look around: look around the room you are in\n'
+                           'move (forward, back, left, right): move in the '
+                           'specified direction\n'
+                           'quit: quit the game')
+                print(message)
             case 'look around':
-                return 'look'
+                current_room = player.map.grid[player.coordinates]
+                text = current_room.description
+                print(textwrap.fill(text))
             case 'move forward':
-                return 'forward'
+                player.move('forward')
             case 'move back':
-                return 'back'
+                player.move('back')
             case 'move left':
-                return 'left'
+                player.move('left')
             case 'move right':
-                return 'right'
+                player.move('right')
             case _:
-                return 'error'
+                print('Invalid command.')
 
 if __name__ == '__main__':
     main()
