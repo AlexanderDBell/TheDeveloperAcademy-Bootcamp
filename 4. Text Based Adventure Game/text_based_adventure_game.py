@@ -60,7 +60,7 @@ def main() -> None:
         (-2, 2),
         ('The smell of vomit lingers in the air. In the sink are several '
          'packets of paracetamol, all empty. From the corner of your eye you '
-         'glimpse a figure curled up in the bathtub, but when you look at it'
+         'glimpse a figure curled up in the bathtub, but when you look at it '
          'directly it vanishes. On your right is the hallway.')
     )
     rooms = {
