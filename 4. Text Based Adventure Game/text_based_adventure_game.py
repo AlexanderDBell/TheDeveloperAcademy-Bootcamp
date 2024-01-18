@@ -226,7 +226,7 @@ class Player:
         if test_room in self.map.connections[current_room]:
             return True
         return False
-    
+
 class InputHandler:
     '''
     A class used to represent an Input Handler
