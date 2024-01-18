@@ -218,11 +218,11 @@ class Player:
             print("You can't go there.")
 
     def _valid_move(self, test_coordinates: tuple[int, int]) -> bool:
-        current_room = self.map.grid[self.coordinates]
         try:
             test_room = self.map.grid[test_coordinates]
         except KeyError:
             return False
+        current_room = self.map.grid[self.coordinates]
         if test_room in self.map.connections[current_room]:
             return True
         return False
