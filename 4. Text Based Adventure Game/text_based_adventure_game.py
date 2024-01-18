@@ -1,16 +1,70 @@
 from typing_extensions import Literal
+import textwrap
 
 def main() -> None:
-    front_garden = Room('front garden', (0, 0), 'placeholder')
-    living_room = Room('living room', (0, 1), 'placeholder')
-    dining_room = Room('dining room', (0, 2), 'placeholder')
-    kitchen = Room('kitchen', (0, 3), 'placeholder')
-    hallway = Room('corridor', (-1, 2), 'placeholder')
-    master_bedroom = Room('master bedroom', (-1, 3), 'placeholder')
-    child_bedroom = Room("children's bedroom", (-1, 1), 'placeholder')
-    bathroom = Room('bathroom', (-2, 2), 'placeholder')
+    entrance = Room(
+        'entrance',
+        (0, 0),
+        ('You find yourself outside the house. It looks abandoned but as you '
+         'approach the door you hear whispers coming from inside.')
+    )
+    living_room = Room(
+        'living room',
+        (0, 1),
+        ('The living room is unassuming. A TV, a sofa and a couple of '
+         'armchairs. You think about the happy times the family must have spent '
+         'together. You hear a faint sound: laughter. Or is it crying? In front '
+         'of you is the dining room. Behind you is the entrance to the house.')
+    )
+    dining_room = Room(
+        'dining room',
+        (0, 2),
+        ("A table and chairs. You don't know what you were expecting. You take "
+         "a closer look and see that the head of the table is covered in stab "
+         'marks. In front of you is the kitchen. Behind you is the living room. '
+         'On your left is a hallway.')
+    )
+    kitchen = Room(
+        'kitchen',
+        (0, 3),
+        ('The kitchen is small and cramped. A gas stove, a tiny oven, a sink '
+         'and a small worksurface. You feel something crunch under your feet. '
+         'You look down to see the remains of what appear to be smashed plates '
+         'and glasses. Behind you is the dining room.')
+    )
+    hallway = Room(
+        'hallway',
+        (-1, 2),
+        ('A picture of a happy family hangs on the wall. The frame has been '
+         'shattered. In front of you is the master bedroom. Behind you is a '
+         "child's bedroom. On your left is the bathroom. On your right is "
+         'the living room.')
+    )
+    master_bedroom = Room(
+        'master bedroom',
+        (-1, 3),
+        ('The king bed lies in the middle of the room backed up against the '
+         'wall. The headboard and wall are peppered with shotgun pellets. Every '
+         'so often you faintly hear a deep sob. Behind you is the hallway.')
+    )
+    child_bedroom = Room(
+        "child's bedroom",
+        (-1, 1),
+        ('A wooden rocking horse in the centre of the room slowly comes to a '
+         'standstill. There is no bedframe, only a mattress stained with '
+         'urine. You take a closer look at the horse and find tiny shards of '
+         'bone on its head. In front of you is the hallway.')
+    )
+    bathroom = Room(
+        'bathroom',
+        (-2, 2),
+        ('The smell of vomit lingers in the air. In the sink are several '
+         'packets of paracetamol, all empty. From the corner of your eye you '
+         'glimpse a figure curled up in the bathtub, but when you look at it'
+         'directly it vanishes. On your right is the hallway.')
+    )
     rooms = {
-        front_garden,
+        entrance,
         living_room,
         dining_room,
         kitchen,
@@ -21,8 +75,8 @@ def main() -> None:
     }
 
     map = Map(rooms)
-    map.connect_rooms(front_garden, {living_room})
-    map.connect_rooms(living_room, {dining_room, front_garden})
+    map.connect_rooms(entrance, {living_room})
+    map.connect_rooms(living_room, {dining_room, entrance})
     map.connect_rooms(dining_room, {kitchen, living_room, hallway})
     map.connect_rooms(kitchen, {dining_room})
     map.connect_rooms(hallway, {master_bedroom, child_bedroom, bathroom, dining_room})
@@ -30,12 +84,11 @@ def main() -> None:
     map.connect_rooms(child_bedroom, {hallway})
     map.connect_rooms(bathroom, {hallway})
 
-    player = Player(front_garden.coordinates, map)
+    player = Player(entrance.coordinates, map)
+    print('Welcome to the game, enter help for available commands.')
+    player.print_current_room()
 
     while True:
-        current_room = map.grid[player.coordinates]
-        print(f'You are in the {current_room.name}')
-
         user_input = InputHandler()
         output = user_input.output()
         
@@ -43,14 +96,16 @@ def main() -> None:
             case 'quit':
                 break
             case 'help':
-                message = ('quit: quit the game'
-                    '\nlook around: look around the room you are in'
-                    '\nmove (forward, back, left, right): move in the'
-                    ' specified direction')
+                message = ('help: display list of commands\n'
+                           'look around: look around the room you are in\n'
+                           'move (forward, back, left, right): move in the '
+                           'specified direction\n'
+                           'quit: quit the game')
                 print(message)
             case 'look':
                 current_room = map.grid[player.coordinates]
-                print(current_room.description)
+                text = current_room.description
+                print(textwrap.fill(text))
             case 'forward':
                 player.move('forward')
             case 'back':
@@ -60,7 +115,7 @@ def main() -> None:
             case 'right':
                 player.move('right')
             case 'error':
-                print('Invalid')
+                print('Invalid command.')
 
 class Room:
     '''
@@ -154,7 +209,9 @@ class Player:
     Methods
     -------
     move(direction)
-        moves the player in the specified direction
+        Moves the player in the specified direction
+    print_current_room()
+        Tells the player what room they are in
     '''
 
     def __init__(self, coordinates: tuple[int, int], map: Map) -> None:
@@ -165,22 +222,24 @@ class Player:
         match direction:
             case 'forward':
                 test_coordinates = (self.coordinates[0], self.coordinates[1] + 1)
-                self._test_move(test_coordinates)
             case 'back':
                 test_coordinates = (self.coordinates[0], self.coordinates[1] - 1)
-                self._test_move(test_coordinates)
             case 'left':
                 test_coordinates = (self.coordinates[0] - 1, self.coordinates[1])
-                self._test_move(test_coordinates)
             case 'right':
                 test_coordinates = (self.coordinates[0] + 1, self.coordinates[1])
-                self._test_move(test_coordinates)
+        self._test_move(test_coordinates)
+    
+    def print_current_room(self) -> None:
+        current_room = self.map.grid[self.coordinates]
+        print(f'You are in the {current_room.name}.')
     
     def _test_move(self, test_coordinates: tuple[int, int]) -> None:
         if self._valid_move(test_coordinates):
             self.coordinates = test_coordinates
+            self.print_current_room()
         else:
-            print('Invalid')
+            print("You can't go there.")
 
     def _valid_move(self, test_coordinates: tuple[int, int]) -> bool:
         current_room = self.map.grid[self.coordinates]
