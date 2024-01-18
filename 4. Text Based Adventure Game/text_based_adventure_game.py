@@ -13,9 +13,8 @@ def main() -> None:
         (0, 1),
         ('The living room is unassuming. A TV, a sofa and a couple of '
          'armchairs. You think about the happy times the family must have '
-         'spent together. You hear a faint sound: laughter. Or is it crying? '
-         'In front of you is the dining room. Behind you is the entrance to '
-         'the house.')
+         'spent together. A couple of empty bottles stand next to the sofa '
+         'Behind you is the entrance to the house.')
     )
     dining_room = Room(
         'dining room',
