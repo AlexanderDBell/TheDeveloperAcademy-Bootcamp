@@ -162,7 +162,7 @@ class Map:
         
     def _adjacent(self, origin: Room, destination: Room) -> Literal[True]:
         manhattan_distance = (
-            abs(origin.coordinates[0] - destination.coordinates[0])
+              abs(origin.coordinates[0] - destination.coordinates[0])
             + abs(origin.coordinates[1] - destination.coordinates[1])
         )
         if manhattan_distance == 1:
