@@ -5,8 +5,8 @@ def main() -> None:
     entrance = Room(
         'entrance',
         (0, 0),
-        ('You find yourself outside the house. It looks abandoned but as you '
-         'approach the door you hear whispers coming from inside.')
+        ('You find yourself outside the house. It is perfectly ordinary. You'
+         'would never think something so terrible could happen here.')
     )
     living_room = Room(
         'living room',
